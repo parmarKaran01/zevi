@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { constants } from "../helper";
 
 type SearchProps ={
-    showSuggestion : Boolean
-    setShowSuggestion : React.Dispatch<React.SetStateAction<boolean>>
+    showSuggestion? : Boolean
+    setShowSuggestion? : React.Dispatch<React.SetStateAction<boolean>>
 }
-const Search = ({ showSuggestion,setShowSuggestion } : SearchProps) => {
+const Search = ({ showSuggestion ,setShowSuggestion = () => {}} : SearchProps) => {
   const [query, setQuery] = useState<string>("");
     const toggle = () => {
         console.log("focus")

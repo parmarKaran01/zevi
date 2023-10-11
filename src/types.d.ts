@@ -5,7 +5,10 @@ export type ProductContextType = {
   addToWishlist: (Product: Product) => void;
   wishlist: Product[];
   isAddedToWishlist: (id: string) => boolean;
-  brandFilterNames : string[]
+  brandFilterNames : string[];
+  handleBrandChange : (event : React.ChangeEvent<HTMLInputElement>) => void
+  query : string 
+  setQuery : React.Dispatch<React.SetStateAction<string>>
 };
 
 export type WishlistMap = {

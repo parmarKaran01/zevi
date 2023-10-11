@@ -7,6 +7,9 @@ export const ProductContext = React.createContext<ProductContextType>({
   wishlist: [],
   isAddedToWishlist: () => false,
   brandFilterNames: [],
+  handleBrandChange: () => {},
+  query: "",
+  setQuery: () => {},
 });
 
 const ProductContextProvider = ({
@@ -17,6 +20,10 @@ const ProductContextProvider = ({
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [brandFilterNames, setBrandFilterNames] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<{
+    [index: string]: string;
+  }>({});
+  const [query, setQuery] = useState("");
 
   function createRandomProduct(): Product {
     return {
@@ -48,7 +55,7 @@ const ProductContextProvider = ({
     }
   };
 
-  console.log("products", products);
+  //   console.log("products", products);
 
   useEffect(() => {
     getProducts();
@@ -67,9 +74,23 @@ const ProductContextProvider = ({
     setWishlist(newList);
   };
 
+  const handleBrandChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const brandName = event.target.value;
+    let map = { ...selectedBrands };
+    if (map[brandName]) {
+      delete map[brandName];
+    } else {
+      map[brandName] = brandName;
+    }
+
+    setSelectedBrands(map);
+  };
+
   //   const brandFilterNames = () : string[] => {
   //     return products.map((item) => item.brand) || [];
   //   };
+
+  console.log("selected brands", selectedBrands);
 
   useEffect(() => {
     let brandArray = products?.map((item) => item.brand) || [];
@@ -80,14 +101,25 @@ const ProductContextProvider = ({
     return !!wishlist.find((singleProduct) => singleProduct._id === _id);
   };
 
+  const FilteredProducts = products.filter((prod) => {
+    return (
+      (prod.brand.includes(selectedBrands[prod.brand]) ||
+        Object.keys(selectedBrands).length === 0) &&
+      prod.title.toLowerCase().includes(query.toLowerCase())
+    );
+  });
+  console.log("filtered", FilteredProducts);
   return (
     <ProductContext.Provider
       value={{
-        products,
+        products: FilteredProducts,
         addToWishlist,
         wishlist,
         isAddedToWishlist,
         brandFilterNames,
+        handleBrandChange,
+        query,
+        setQuery,
       }}
     >
       {children}

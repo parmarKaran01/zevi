@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useContext } from "react";
 import SuggestionBox from "./components/SuggestionBox";
 import Products from "./pages/Products";
-import ProductContextProvider, {
+import {
   ProductContext,
 } from "./context/ProductContext";
 

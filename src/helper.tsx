@@ -14,27 +14,22 @@ export const constants = {
     large: "6rem",
   },
 
-  priceRange: [
-    {
-      range: "Under 500",
-      value: {
-        min: 0,
-        max: 499,
-      },
+  priceRange: {
+    "Under 500": {
+        id : 0,
+      min: 0,
+      max: 499,
     },
-    {
-      range: "500 - 1000",
-      value: {
-        min: 500,
-        max: 999,
-      },
+
+    "500 - 1000": {
+        id : 1,
+      min: 500,
+      max: 999,
     },
-    {
-      range: "1000 - 1500",
-      value: {
-        min: 1000,
-        max: 1499,
-      },
+    "1000 - 1500": {
+        id : 2,
+      min: 1000,
+      max: 1499,
     },
-  ],
+  },
 };

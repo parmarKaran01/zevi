@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Product, ProductContextType } from "../types";
 import { faker } from "@faker-js/faker";
+import { constants } from "../helper";
 export const ProductContext = React.createContext<ProductContextType>({
   products: [],
   addToWishlist: () => {},
@@ -8,8 +9,10 @@ export const ProductContext = React.createContext<ProductContextType>({
   isAddedToWishlist: () => false,
   brandFilterNames: [],
   handleBrandChange: () => {},
+  handlePriceChange: () => {},
   query: "",
   setQuery: () => {},
+  priceFilter: {},
 });
 
 const ProductContextProvider = ({
@@ -19,17 +22,40 @@ const ProductContextProvider = ({
 }): React.ReactElement => {
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [query, setQuery] = useState("");
   const [brandFilterNames, setBrandFilterNames] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<{
     [index: string]: string;
   }>({});
-  const [query, setQuery] = useState("");
+
+  const [priceFilter, setPriceFilter] = useState<{
+    [index: string]: number;
+    // name : string;
+  }>({});
+
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const range: {
+        [index: string]: {
+          [index: string]: number;
+        };
+      } = constants.priceRange;
+      setPriceFilter({
+        // name: [event.target.value],
+        ...range[event.target.value],
+      });
+    } else {
+      setPriceFilter({});
+    }
+  };
+
+  console.log("priceFilter", priceFilter);
 
   function createRandomProduct(): Product {
     return {
       _id: faker.string.uuid(),
       image: faker.image.avatar(),
-      price: faker.finance.amount(500, 1000, 0),
+      price: faker.finance.amount(200, 2000, 0),
       discount: faker.finance.amount(5, 10, 0),
       title: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
@@ -40,14 +66,6 @@ const ProductContextProvider = ({
   }
 
   const getProducts = async () => {
-    // try {
-    //   const res = await fetch("https://fakestoreapi.com/products");
-    //   const data = await res.json();
-    //   console.log("data", data);
-    //   setProducts(data);
-    // } catch (error) {
-    //   console.log("err", error);
-    // }
     let array: Product[] = [];
     for (let i = 0; i < 20; i++) {
       array.push(createRandomProduct());
@@ -55,7 +73,6 @@ const ProductContextProvider = ({
     }
   };
 
-  //   console.log("products", products);
 
   useEffect(() => {
     getProducts();
@@ -86,9 +103,6 @@ const ProductContextProvider = ({
     setSelectedBrands(map);
   };
 
-  //   const brandFilterNames = () : string[] => {
-  //     return products.map((item) => item.brand) || [];
-  //   };
 
   console.log("selected brands", selectedBrands);
 
@@ -102,10 +116,14 @@ const ProductContextProvider = ({
   };
 
   const FilteredProducts = products.filter((prod) => {
+    const min = priceFilter.min;
+    const max = priceFilter.max;
     return (
       (prod.brand.includes(selectedBrands[prod.brand]) ||
         Object.keys(selectedBrands).length === 0) &&
-      prod.title.toLowerCase().includes(query.toLowerCase())
+      prod.title.toLowerCase().includes(query.toLowerCase()) &&
+      ((parseInt(prod.price) <= max && parseInt(prod.price) >= min) ||
+        Object.keys(priceFilter).length === 0)
     );
   });
   console.log("filtered", FilteredProducts);
@@ -120,6 +138,8 @@ const ProductContextProvider = ({
         handleBrandChange,
         query,
         setQuery,
+        handlePriceChange,
+        priceFilter,
       }}
     >
       {children}

@@ -7,6 +7,11 @@ export type ProductContextType = {
   isAddedToWishlist: (id: string) => boolean;
   brandFilterNames : string[];
   handleBrandChange : (event : React.ChangeEvent<HTMLInputElement>) => void
+  handlePriceChange : (event : React.ChangeEvent<HTMLInputElement>) => void
+  priceFilter : {
+    [index: string]: number;
+    // name : string;
+  }
   query : string 
   setQuery : React.Dispatch<React.SetStateAction<string>>
 };

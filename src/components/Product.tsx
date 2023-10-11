@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { constants } from "../helper";
 import { ProductContext } from "../context/ProductContext";
 import { Product } from "../types";
@@ -8,7 +8,7 @@ type ProductProps = {
 };
 
 const ProductComponent = ({ product }: ProductProps) => {
-  const { addToWishlist, wishlist, isAddedToWishlist } =
+  const { addToWishlist, isAddedToWishlist } =
     useContext(ProductContext);
   const [showProductButton, setShowProductButton] = useState(false);
 

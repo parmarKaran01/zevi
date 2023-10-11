@@ -1,6 +1,6 @@
 type StarRatingProps = {
   rating: number;
-  count: number;
+  count?: number;
 };
 
 const StarRating = ({ rating, count }: StarRatingProps) => {
@@ -18,7 +18,9 @@ const StarRating = ({ rating, count }: StarRatingProps) => {
         </span>
       ))}
 
-      <span className="ml-2 text-slate-700 text-sm">{`(${count})`}</span>
+      {count ? (
+        <span className="ml-2 text-slate-700 text-sm">{`(${count})`}</span>
+      ) : null}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { constants } from "../helper";
 import GenericDropdown from "./GenericDropdown";
+import StarRating from "./StarRating";
 
 type FilterHeaderComponentProps = {
   name: string;
@@ -53,13 +54,18 @@ const PriceFilterContent = ({
   );
 };
 
+const RatingFilterContent = () => {};
+
 const Filters = () => {
   const {
     brandFilterNames,
     handleBrandChange,
     handlePriceChange,
     priceFilter,
+    handleRatingChange,
+    selectedRating
   } = useContext(ProductContext);
+
 
   return (
     <div className="w-[400px] pr-12">
@@ -102,6 +108,33 @@ const Filters = () => {
                   handlePriceChange={handlePriceChange}
                   priceFilter={priceFilter}
                 />
+              );
+            })}
+          </div>
+        }
+      />
+
+      {/* rating filter */}
+
+      <GenericDropdown
+        Header={<FilterHeaderComponent name={"Ratings"} />}
+        Content={
+          <div className="flex flex-col">
+            {[5, 4, 3, 2, 1].map((item, index) => {
+              return (
+                <div className="flex items-center gap-2">
+                  <input
+                    key={index}
+                    type="checkbox"
+                    // id={item}
+                    value={item}
+                    className="cursor-pointer"
+                    name="brand"
+                    onChange={handleRatingChange}
+                    checked={selectedRating === item}
+                  />
+                  <StarRating rating={item}/>
+                </div>
               );
             })}
           </div>

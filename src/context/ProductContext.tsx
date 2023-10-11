@@ -10,9 +10,11 @@ export const ProductContext = React.createContext<ProductContextType>({
   brandFilterNames: [],
   handleBrandChange: () => {},
   handlePriceChange: () => {},
+  handleRatingChange: () => {},
   query: "",
   setQuery: () => {},
   priceFilter: {},
+  selectedRating: null,
 });
 
 const ProductContextProvider = ({
@@ -27,6 +29,7 @@ const ProductContextProvider = ({
   const [selectedBrands, setSelectedBrands] = useState<{
     [index: string]: string;
   }>({});
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
 
   const [priceFilter, setPriceFilter] = useState<{
     [index: string]: number;
@@ -49,6 +52,14 @@ const ProductContextProvider = ({
     }
   };
 
+  const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event.target.checked){
+      setSelectedRating(parseInt(event.target.value));
+    }else {
+      setSelectedRating(null)
+    }
+  };
+
   console.log("priceFilter", priceFilter);
 
   function createRandomProduct(): Product {
@@ -59,7 +70,7 @@ const ProductContextProvider = ({
       discount: faker.finance.amount(5, 10, 0),
       title: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
-      rating: faker.finance.amount({ min: 0, max: 5, dec: 1 }),
+      rating: faker.finance.amount({ min: 0, max: 5, dec: 0 }),
       ratingCount: faker.finance.amount(5, 250, 0),
       brand: faker.company.name(),
     };
@@ -72,7 +83,6 @@ const ProductContextProvider = ({
       setProducts(array);
     }
   };
-
 
   useEffect(() => {
     getProducts();
@@ -103,7 +113,6 @@ const ProductContextProvider = ({
     setSelectedBrands(map);
   };
 
-
   console.log("selected brands", selectedBrands);
 
   useEffect(() => {
@@ -123,7 +132,7 @@ const ProductContextProvider = ({
         Object.keys(selectedBrands).length === 0) &&
       prod.title.toLowerCase().includes(query.toLowerCase()) &&
       ((parseInt(prod.price) <= max && parseInt(prod.price) >= min) ||
-        Object.keys(priceFilter).length === 0)
+        Object.keys(priceFilter).length === 0) && (selectedRating === parseInt(prod.rating) || !!!selectedRating)
     );
   });
   console.log("filtered", FilteredProducts);
@@ -140,6 +149,8 @@ const ProductContextProvider = ({
         setQuery,
         handlePriceChange,
         priceFilter,
+        selectedRating,
+        handleRatingChange,
       }}
     >
       {children}

@@ -19,15 +19,17 @@ const ProductComponent = ({ product }: ProductProps) => {
             ? constants.img.heartFilled
             : constants.img.heartHollow
         }
-        className="absolute right-2 top-2 w-6 h-6 cursor-pointer"
+        className="absolute right-2 top-2 w-6 h-6 cursor-pointer z-10"
         onClick={() => addToWishlist(product)}
       />
-      <img
-        src={product.image}
-        alt={product.title}
-        className="object-cover w-full h-[300px]"
-      />
-      <h3 className="font-semibold mt-4">{product.title}</h3>
+      <div className="relative flex items-center justify-center">
+        <img
+          src={product.image}
+          alt={product.title}
+          className="object-cover w-full h-[300px]"
+        />
+      </div>
+      <h3 className="font-semibold mt-4 text-ellipsis whitespace-nowrap">{product.title}</h3>
       <div className="flex items-center gap-2">
         <span className="line-through">Rs.{product.price}</span>
         <span>

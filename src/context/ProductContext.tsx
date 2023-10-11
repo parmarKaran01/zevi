@@ -6,6 +6,7 @@ export const ProductContext = React.createContext<ProductContextType>({
   addToWishlist: () => {},
   wishlist: [],
   isAddedToWishlist: () => false,
+  brandFilterNames: [],
 });
 
 const ProductContextProvider = ({
@@ -15,6 +16,7 @@ const ProductContextProvider = ({
 }): React.ReactElement => {
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [brandFilterNames, setBrandFilterNames] = useState<string[]>([]);
 
   function createRandomProduct(): Product {
     return {
@@ -26,6 +28,7 @@ const ProductContextProvider = ({
       description: faker.commerce.productDescription(),
       rating: faker.finance.amount({ min: 0, max: 5, dec: 1 }),
       ratingCount: faker.finance.amount(5, 250, 0),
+      brand: faker.company.name(),
     };
   }
 
@@ -52,7 +55,7 @@ const ProductContextProvider = ({
   }, []);
 
   const addToWishlist = (item: Product) => {
-    let newList = [];
+    let newList: Product[] = [];
     let ele = wishlist.find((singleProduct) => singleProduct._id === item._id);
     if (ele) {
       newList = wishlist.filter(
@@ -64,13 +67,28 @@ const ProductContextProvider = ({
     setWishlist(newList);
   };
 
+  //   const brandFilterNames = () : string[] => {
+  //     return products.map((item) => item.brand) || [];
+  //   };
+
+  useEffect(() => {
+    let brandArray = products?.map((item) => item.brand) || [];
+    setBrandFilterNames(brandArray);
+  }, [products]);
+
   const isAddedToWishlist = (_id: string) => {
     return !!wishlist.find((singleProduct) => singleProduct._id === _id);
   };
 
   return (
     <ProductContext.Provider
-      value={{ products, addToWishlist, wishlist, isAddedToWishlist }}
+      value={{
+        products,
+        addToWishlist,
+        wishlist,
+        isAddedToWishlist,
+        brandFilterNames,
+      }}
     >
       {children}
     </ProductContext.Provider>

@@ -5,6 +5,7 @@ export type ProductContextType = {
   addToWishlist: (Product: Product) => void;
   wishlist: Product[];
   isAddedToWishlist: (id: string) => boolean;
+  brandFilterNames : string[]
 };
 
 export type WishlistMap = {
@@ -20,4 +21,6 @@ export type Product = {
   description: string;
   rating: string;
   ratingCount: string;
+  brand: string;
 };
+

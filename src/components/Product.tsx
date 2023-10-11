@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { constants } from "../helper";
 import { ProductContext } from "../context/ProductContext";
 import { Product } from "../types";
+import StarRating from "./StarRating";
 
 type ProductProps = {
   product: Product;
@@ -44,7 +45,7 @@ const ProductComponent = ({ product }: ProductProps) => {
       </h3>
       <div className="flex items-center gap-2">
         <span className="line-through">Rs.{product.price}</span>
-        <span>
+        <span className="text-blue-400 font-semibold text-lg">
           Rs.
           {parseInt(product.price) -
             Math.ceil(
@@ -52,6 +53,8 @@ const ProductComponent = ({ product }: ProductProps) => {
             )}
         </span>
       </div>
+
+      <StarRating rating={parseInt(product.rating)} count={parseInt(product.ratingCount)}/>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { constants } from "../helper";
+import ArrowUp from "../assets/arrow-up.svg"
+import ArrowDown from "../assets/arrow-down.svg"
 
 type GenericDropdownProps = {
   Header: React.ReactNode;
@@ -16,7 +17,7 @@ const GenericDropdown = ({ Header, Content }: GenericDropdownProps) => {
         {Header}{" "}
         <img
           src={
-            isContentVisible ? constants.img.arrowUp : constants.img.arrowDown
+            isContentVisible ? ArrowUp: ArrowDown
           }
           className="h-4 w-4"
         />

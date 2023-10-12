@@ -3,6 +3,8 @@ import { useState, useEffect, useContext } from "react";
 import Search from "./Search";
 import { ProductContext } from "../context/ProductContext";
 import { constants } from "../helper";
+import Back from "../assets/back.svg"
+import Zevi from "../assets/zevi.webp"
 const Navbar = () => {
   const navigate = useNavigate();
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
@@ -21,14 +23,14 @@ const Navbar = () => {
       {showSearchBar ? (
         <>
           <button onClick={() => navigate("/")}>
-            <img src={constants.img.back} className="w-6 h-6"/>
+            <img src={Back} className="w-6 h-6"/>
           </button>
           <div className="mx-auto hidden md:block">
           <Search query={query} setQuery={setQuery} navBarStyles={true} />
           </div>
         </>
       ) : null}
-      <img src={constants.img.zevi} className="w-20 absolute right-12"/>
+      <img src={Zevi} className="w-20 absolute right-12"/>
     </div>
   );
 };

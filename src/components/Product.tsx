@@ -4,6 +4,8 @@ import { ProductContext } from "../context/ProductContext";
 import { Product } from "../types";
 import StarRating from "./StarRating";
 import useWindowSize from "../hooks/useWindowSize";
+import HeartFilled from "../assets/heart-filled.svg"
+import HeartHollow from "../assets/heart-hollow.svg"
 
 type ProductProps = {
   product: Product;
@@ -25,8 +27,8 @@ const ProductComponent = ({ product }: ProductProps) => {
       <img
         src={
           isAddedToWishlist(product._id)
-            ? constants.img.heartFilled
-            : constants.img.heartHollow
+            ? HeartFilled
+            : HeartHollow
         }
         className="absolute right-2 top-2 w-6 h-6 cursor-pointer z-10"
         onClick={() => addToWishlist(product)}

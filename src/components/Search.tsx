@@ -1,5 +1,5 @@
 import React from "react";
-import { constants } from "../helper";
+import SearchIcon from "../assets/search.svg"
 
 type SearchProps = {
   showSuggestion?: Boolean;
@@ -39,7 +39,7 @@ const Search = ({
         // onBlur={toggle}
         placeholder="Search"
       />
-      <img src={constants.img.search} className="cursor-pointer" />
+      <img src={SearchIcon} className="cursor-pointer" />
     </div>
   );
 };

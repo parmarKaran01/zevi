@@ -33,7 +33,7 @@ const SuggestionBox = ({ setShowSuggestion }: SuggestionBoxProps) => {
     >
       <div>
         <h2 className="text-xl font-semibold mb-2">Latest Trends</h2>
-        <div className="flex items-center justify-between overflow-x-auto gap-4">
+        <div className="flex items-center justify-start overflow-x-auto gap-12">
           {products.slice(0, 5).map((item) => {
             return (
               <div

@@ -19,6 +19,13 @@ type priceFilterContentType = {
   };
 };
 
+type RatingFilterContentProps = {
+  index: number;
+  item: number;
+  handleRatingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  selectedRating: number | null;
+};
+
 const FilterHeaderComponent = ({ name }: FilterHeaderComponentProps) => {
   return (
     <div>
@@ -55,7 +62,28 @@ const PriceFilterContent = ({
   );
 };
 
-const RatingFilterContent = () => {};
+const RatingFilterContent = ({
+  index,
+  item,
+  handleRatingChange,
+  selectedRating,
+}: RatingFilterContentProps) => {
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        key={index}
+        type="checkbox"
+        // id={item}
+        value={item}
+        className="cursor-pointer"
+        name="brand"
+        onChange={handleRatingChange}
+        checked={selectedRating === item}
+      />
+      <StarRating rating={item} />
+    </div>
+  );
+};
 
 const Filters = () => {
   const {
@@ -132,19 +160,12 @@ const Filters = () => {
           <div className="flex flex-col">
             {[5, 4, 3, 2, 1].map((item, index) => {
               return (
-                <div className="flex items-center gap-2">
-                  <input
-                    key={index}
-                    type="checkbox"
-                    // id={item}
-                    value={item}
-                    className="cursor-pointer"
-                    name="brand"
-                    onChange={handleRatingChange}
-                    checked={selectedRating === item}
-                  />
-                  <StarRating rating={item} />
-                </div>
+                <RatingFilterContent
+                  item={item}
+                  index={index}
+                  handleRatingChange={handleRatingChange}
+                  selectedRating={selectedRating}
+                />
               );
             })}
           </div>

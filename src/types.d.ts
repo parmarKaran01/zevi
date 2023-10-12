@@ -11,6 +11,7 @@ export type ProductContextType = {
   handleRatingChange : (event : React.ChangeEvent<HTMLInputElement>) => void
   showFilterDrawer : boolean,
   setShowFilterDrawer : React.Dispatch<React.SetStateAction<boolean>>
+  clearFilters: () => void
   priceFilter : {
     [index: string]: number;
     // name : string;

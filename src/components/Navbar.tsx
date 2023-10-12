@@ -2,12 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import Search from "./Search";
 import { ProductContext } from "../context/ProductContext";
-import useWindowSize from "../hooks/useWindowSize";
 import { constants } from "../helper";
 const Navbar = () => {
   const navigate = useNavigate();
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
-  const { query, setQuery, setShowFilterDrawer } = useContext(ProductContext);
+  const { query, setQuery} = useContext(ProductContext);
 
   useEffect(() => {
     if (window.location.pathname === "/products") {

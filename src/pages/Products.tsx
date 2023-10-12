@@ -11,9 +11,12 @@ const Products = () => {
   const { width } = useWindowSize();
   return (
     <div className="w-full py-4 px-8 bg-white">
-      <div className="flex items-center justify-center py-2">
-        <Search query={query} setQuery={setQuery} />
-      </div>
+      {width < 800 ? (
+        <div className="flex items-center justify-center py-2">
+          <Search query={query} setQuery={setQuery} />
+        </div>
+      ) : null}
+
       <div className="flex items-center gap-4 justify-between mb-4">
         <h2 className="md:text-3xl">Search Results</h2>
         {width < 800 ? (

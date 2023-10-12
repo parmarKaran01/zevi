@@ -16,7 +16,7 @@ const ProductComponent = ({ product }: ProductProps) => {
 
   return (
     <div
-      className={`w-[200px] rounded-md overflow-hidden relative shadow-sm ${
+      className={`w-[200px] rounded-md overflow-hidden relative ${
         width <= 500 ? "w-[90%]" : ""
       }`}
       onMouseEnter={() => setShowProductButton(true)}

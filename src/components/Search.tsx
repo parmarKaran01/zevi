@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { constants } from "../helper";
 
 type SearchProps = {
@@ -11,7 +11,6 @@ type SearchProps = {
 const Search = ({
   query,
   setQuery,
-  showSuggestion,
   setShowSuggestion = () => {},
   navBarStyles,
 }: SearchProps) => {

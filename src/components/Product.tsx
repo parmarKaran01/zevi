@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { constants } from "../helper";
 import { ProductContext } from "../context/ProductContext";
 import { Product } from "../types";
 import StarRating from "./StarRating";

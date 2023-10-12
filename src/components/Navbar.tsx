@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import Search from "./Search";
 import { ProductContext } from "../context/ProductContext";
-import { constants } from "../helper";
 import Back from "../assets/back.svg"
 import Zevi from "../assets/zevi.webp"
 const Navbar = () => {

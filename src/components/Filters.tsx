@@ -3,6 +3,7 @@ import { ProductContext } from "../context/ProductContext";
 import { constants } from "../helper";
 import GenericDropdown from "./GenericDropdown";
 import StarRating from "./StarRating";
+import useWindowSize from "../hooks/useWindowSize";
 
 type FilterHeaderComponentProps = {
   name: string;
@@ -63,12 +64,21 @@ const Filters = () => {
     handlePriceChange,
     priceFilter,
     handleRatingChange,
-    selectedRating
+    selectedRating,
+    showFilterDrawer,
   } = useContext(ProductContext);
-
+  const { width } = useWindowSize();
 
   return (
-    <div className="w-[400px] pr-12">
+    <div
+      className={`pr-12 overflow-y-auto bg-white h-[75vh] ${
+        width <= 800
+          ? `absolute w-[300px] z-20 bg-white h-screen  ${
+              showFilterDrawer ? "block" : "hidden"
+            }`
+          : "w-[400px]"
+      }`}
+    >
       {/* brand filter */}
       <GenericDropdown
         Header={<FilterHeaderComponent name={"Brand"} />}
@@ -133,7 +143,7 @@ const Filters = () => {
                     onChange={handleRatingChange}
                     checked={selectedRating === item}
                   />
-                  <StarRating rating={item}/>
+                  <StarRating rating={item} />
                 </div>
               );
             })}

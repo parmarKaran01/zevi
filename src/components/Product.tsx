@@ -3,19 +3,22 @@ import { constants } from "../helper";
 import { ProductContext } from "../context/ProductContext";
 import { Product } from "../types";
 import StarRating from "./StarRating";
+import useWindowSize from "../hooks/useWindowSize";
 
 type ProductProps = {
   product: Product;
 };
 
 const ProductComponent = ({ product }: ProductProps) => {
-  const { addToWishlist, isAddedToWishlist } =
-    useContext(ProductContext);
+  const { addToWishlist, isAddedToWishlist } = useContext(ProductContext);
   const [showProductButton, setShowProductButton] = useState(false);
+  const { width } = useWindowSize();
 
   return (
     <div
-      className="w-[200px] rounded-md overflow-hidden relative shadow-sm"
+      className={`w-[200px] rounded-md overflow-hidden relative shadow-sm ${
+        width <= 500 ? "w-[90%]" : ""
+      }`}
       onMouseEnter={() => setShowProductButton(true)}
       onMouseLeave={() => setShowProductButton(false)}
     >
@@ -54,7 +57,10 @@ const ProductComponent = ({ product }: ProductProps) => {
         </span>
       </div>
 
-      <StarRating rating={parseInt(product.rating)} count={parseInt(product.ratingCount)}/>
+      <StarRating
+        rating={parseInt(product.rating)}
+        count={parseInt(product.ratingCount)}
+      />
     </div>
   );
 };

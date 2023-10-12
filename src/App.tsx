@@ -5,18 +5,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useContext } from "react";
 import SuggestionBox from "./components/SuggestionBox";
 import Products from "./pages/Products";
-import {
-  ProductContext,
-} from "./context/ProductContext";
+import { ProductContext } from "./context/ProductContext";
 
 function App() {
   const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
   const { query, setQuery } = useContext(ProductContext);
+
   return (
     <BrowserRouter>
-      <div className="w-screen h-screen overflow-x-hidden">
+      <div className="w-screen h-screen overflow-hidden bg-[url('/src/assets/background.jpg')] object-contain">
         <Navbar />
-
         <Routes>
           <Route
             path="/"
@@ -29,7 +27,9 @@ function App() {
                     query={query}
                     setQuery={setQuery}
                   />
-                  {showSuggestion ? <SuggestionBox /> : null}
+                  {showSuggestion ? (
+                    <SuggestionBox setShowSuggestion={setShowSuggestion} />
+                  ) : null}
                 </div>
               </>
             }

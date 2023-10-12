@@ -5,6 +5,8 @@ export const constants = {
     heartFilled: "/src/assets/heart-filled.svg",
     arrowDown: "/src/assets/arrow-down.svg",
     arrowUp: "/src/assets/arrow-up.svg",
+    back: "/src/assets/back.svg",
+    zevi: "/src/assets/zevi.webp",
   },
 
   padding: {

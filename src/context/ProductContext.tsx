@@ -11,10 +11,13 @@ export const ProductContext = React.createContext<ProductContextType>({
   handleBrandChange: () => {},
   handlePriceChange: () => {},
   handleRatingChange: () => {},
+  setShowFilterDrawer: () => {},
+  showFilterDrawer: false,
   query: "",
   setQuery: () => {},
   priceFilter: {},
   selectedRating: null,
+  clearFilters: () => {},
 });
 
 const ProductContextProvider = ({
@@ -22,6 +25,7 @@ const ProductContextProvider = ({
 }: {
   children: React.ReactNode;
 }): React.ReactElement => {
+  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
@@ -53,10 +57,10 @@ const ProductContextProvider = ({
   };
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if(event.target.checked){
+    if (event.target.checked) {
       setSelectedRating(parseInt(event.target.value));
-    }else {
-      setSelectedRating(null)
+    } else {
+      setSelectedRating(null);
     }
   };
 
@@ -113,6 +117,12 @@ const ProductContextProvider = ({
     setSelectedBrands(map);
   };
 
+  const clearFilters = () => {
+    setSelectedBrands({});
+    setPriceFilter({});
+    setSelectedRating(null);
+  };
+
   console.log("selected brands", selectedBrands);
 
   useEffect(() => {
@@ -132,7 +142,8 @@ const ProductContextProvider = ({
         Object.keys(selectedBrands).length === 0) &&
       prod.title.toLowerCase().includes(query.toLowerCase()) &&
       ((parseInt(prod.price) <= max && parseInt(prod.price) >= min) ||
-        Object.keys(priceFilter).length === 0) && (selectedRating === parseInt(prod.rating) || !!!selectedRating)
+        Object.keys(priceFilter).length === 0) &&
+      (selectedRating === parseInt(prod.rating) || !!!selectedRating)
     );
   });
   console.log("filtered", FilteredProducts);
@@ -151,6 +162,9 @@ const ProductContextProvider = ({
         priceFilter,
         selectedRating,
         handleRatingChange,
+        showFilterDrawer,
+        setShowFilterDrawer,
+        clearFilters
       }}
     >
       {children}

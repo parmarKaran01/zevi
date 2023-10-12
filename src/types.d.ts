@@ -9,6 +9,8 @@ export type ProductContextType = {
   handleBrandChange : (event : React.ChangeEvent<HTMLInputElement>) => void
   handlePriceChange : (event : React.ChangeEvent<HTMLInputElement>) => void
   handleRatingChange : (event : React.ChangeEvent<HTMLInputElement>) => void
+  showFilterDrawer : boolean,
+  setShowFilterDrawer : React.Dispatch<React.SetStateAction<boolean>>
   priceFilter : {
     [index: string]: number;
     // name : string;
